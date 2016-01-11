@@ -1,0 +1,74 @@
+"""Create symlinks from local files to appropriate library folders in user directory.
+
+Usage:
+    In the latex-libs root directory, run:
+    $ python symlink.py
+
+Functions
+---------
+-   main            - API Function executed by running this script.
+-   getFiles        - Find files in target directory, construct symlink names.
+-   create_symlink  - Unlink an existing symbolic-link if it exists, create symlink.
+
+"""
+import os
+
+DIRS = [["./styles/", "/Users/lzkelley/Library/texmf/tex/latex/"],
+        ["./biblio/", "/Users/lzkelley/Library/texmf/bibtex/bst/"],
+        ["./templates/", "/Users/lzkelley/Library/TeXShop/Templates/"]]
+
+VERBOSE = False
+
+
+def main():
+    # Iterate over directories
+    for (din, dout) in DIRS:
+        # Get input and output (symlink) file names
+        fin, fout = getFiles(din, dout)
+        # Create links
+        for infile, outfile in zip(fin, fout):
+            create_symlink(infile, outfile)
+
+    return
+
+    # Create links for all these files
+    createLinks(yesFiles)
+    # Tell user about any files NOT linked
+    otherFiles = nonLinks(yesFiles)
+    return
+
+
+def getFiles(din, dout):
+    if VERBOSE: print("Dir: '{}'".format(din))
+    fin = []
+    fout = []
+    # Iterate over files in directory
+    temp = os.listdir(din)
+    for tt in temp:
+        # Filter out hidden and emacs-backup files
+        if not tt.startswith(".") and not tt.endswith("~"):
+            # Append input-filename
+            f_in = os.path.join(din, tt)
+            fin.append(f_in)
+            # Create output-filename
+            t_dir, t_fil = os.path.split(tt)
+            f_out = os.path.join(dout, t_fil)
+            # Append
+            fout.append(f_out)
+            if VERBOSE: print("\t'{}' ---> '{}'".format(f_in, f_out))
+
+    return fin, fout
+
+
+def create_symlink(src, dest):
+    if os.path.islink(dest):
+        if VERBOSE: print("> Unlink '{}'".format(dest))
+        os.unlink(dest)
+
+    if VERBOSE: print("> symlink '{}' ---> '{}'.".format(src, dest))
+    os.symlink(src, dest)
+    return
+
+    
+if __name__ == "__main__": 
+    main()
