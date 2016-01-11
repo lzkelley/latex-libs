@@ -4,6 +4,7 @@ latex-libs
 Static files for latex projects, specifically style files, templates and helpful, common
 definitions.
 
+
 Organization
 ------------
 -   styles/         - Style files and general purpose definitions which can be included in other
@@ -13,3 +14,6 @@ Organization
                       '/Users/lzkelley/Library/texmf/bibtex/bst'
 -   templates/      - Template files (for use with `TeXShop`).  Should be linked to:
                       '/Users/lzkelley/Library/TeXShop/Templates'
+
+-   symlink.py      - Create symbolic links of local files into the required library directories
+                      so they can be found by the latex compilers.
