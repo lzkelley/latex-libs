@@ -12,13 +12,16 @@ Functions
 
 """
 import os
+import shutil
+import warnings
 
 DIRS = [["./styles/", "/Users/lzkelley/Library/texmf/tex/latex/"],
         ["./biblio/", "/Users/lzkelley/Library/texmf/bibtex/bst/"],
         ["./templates/", "/Users/lzkelley/Library/TeXShop/Templates/"]]
 
-VERBOSE = False
-
+VERBOSE = True
+TEST = False
+COPY_INSTEAD_OF_SYMLINK = False
 
 def main():
     # Iterate over directories
@@ -49,11 +52,13 @@ def getFiles(din, dout):
         if not tt.startswith(".") and not tt.endswith("~"):
             # Append input-filename
             f_in = os.path.join(din, tt)
+            f_in = os.path.abspath(f_in)
             fin.append(f_in)
             # Create output-filename
             t_dir, t_fil = os.path.split(tt)
             f_out = os.path.join(dout, t_fil)
             # Append
+            f_out = os.path.abspath(f_out)
             fout.append(f_out)
             if VERBOSE: print("\t'{}' ---> '{}'".format(f_in, f_out))
 
@@ -62,12 +67,27 @@ def getFiles(din, dout):
 
 def create_symlink(src, dest):
     if os.path.islink(dest):
-        if VERBOSE: print("> Unlink '{}'".format(dest))
-        os.unlink(dest)
+        try:
+            if VERBOSE: print("> unlink '{}'".format(dest))
+            if not TEST: os.unlink(dest)
+        except Exception as err:
+            warnings.warn(str(err))
 
-    if VERBOSE: print("> symlink '{}' ---> '{}'.".format(src, dest))
-    os.symlink(src, dest)
+        try:
+            if VERBOSE: print("> delete '{}'".format(dest))
+            if not TEST: os.remove(dest)
+        except Exception as err:
+            warnings.warn(str(err))
+
+
+    if COPY_INSTEAD_OF_SYMLINK:
+        if VERBOSE: print(">\tcopy '{}' ---> '{}'.".format(src, dest))
+        if not TEST: shutil.copyfile(src, dest)
+    else:
+        if VERBOSE: print(">\tsymlink '{}' ---> '{}'.".format(src, dest))
+        if not TEST: os.symlink(src, dest)
     return
+
 
     
 if __name__ == "__main__": 
