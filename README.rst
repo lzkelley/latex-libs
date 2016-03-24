@@ -7,6 +7,7 @@ definitions.
 
 Organization
 ------------
+-   docs/           - Documents and Documentation for packages, use subfolders for each one.
 -   styles/         - Style files and general purpose definitions which can be included in other
                       latex files.  These files should be linked to:
                       '/Users/lzkelley/Library/texmf/tex/latex'
