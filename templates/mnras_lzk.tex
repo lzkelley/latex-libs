@@ -1,0 +1,199 @@
+\documentclass[useAMS, usenatbib]{mnras}
+\usepackage{color}
+\usepackage{booktabs}   % Fancier tables
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{totcount}
+\usepackage{cuted}
+% adds colors to colorspace (https://en.wikibooks.org/wiki/LaTeX/Colors)
+\usepackage[dvipsnames, table]{xcolor}
+\usepackage{graphicx}
+\usepackage{multirow}
+% Force figures to stay in their sections (tex.stackexchange.com/q/279/22806)
+\usepackage[section]{placeins}
+\usepackage{subfig}
+\usepackage{multicol}
+\usepackage{widetext}
+\usepackage{upgreek}    % allow alternative greek letters like $\uptau$
+\usepackage{enumitem}   % customize enumerate symbols
+\setlist[enumerate]{leftmargin=*}   % Set left-margin of enumerate lists to match the edge
+\setlist[itemize]{leftmargin=*}   % Set left-margin of enumerate lists to match the edge
+\usepackage[T1]{fontenc}
+
+\usepackage{lipsum} % generate dummy text
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% \usepackage{txfonts}     %more compact fonts closer to the ones used by MNRAS
+
+\graphicspath{ {figs/} }
+
+% shift around the text on the page so looks good on Letter paper
+\voffset-.6in
+\hoffset0.2in
+
+\input{CustComs}
+\input{JournalAbbrevs}
+
+
+% ===> FIX: pdfendlink ended up... errors (see: https://github.com/ho-tex/hyperref/issues/19#issuecomment-319483975)
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\@combinedblfloats{\box\@outputbox}{\unvbox\@outputbox}{}{\errmessage{\noexpand patch failed}}
+\makeatother
+% <=== FIX
+
+% == Terminology Shortcuts ==
+
+\newcommand{\hvaramp}{\chi}
+\newcommand{\per}{p}
+\newcommand{\inc}{i}
+\newcommand{\incmin}{i_\trt{min}}
+\newcommand{\snr}{\mathrm{SNR}}
+
+\newcommand{\till}{t_\textrm{\tiny ill}}
+
+\newcommand{\fnu}{F_{\nu}}
+\newcommand{\fnusens}{F_{\nu,\trt{sens}}}
+\newcommand{\fnusenscrts}{F_{\nu,\trt{sens}}^\trt{CRTS}}
+\newcommand{\fnusenslsst}{F_{\nu,\trt{sens}}^\trt{LSST}}
+\newcommand{\dfnu}{\delta_{\tiny F}}
+\newcommand{\dfnusens}{\delta_{{\tiny F}, \textrm{\tiny sens}}}
+\newcommand{\dfnumin}{\delta_{{\tiny F}, \textrm{\tiny min}}}
+\newcommand{\dfdop}{\delta_{\tiny F}^\trt{dop}}
+\newcommand{\dfhyd}{\delta_{\tiny F}^\trt{hyd}}
+
+\newcommand{\rate}{\mathcal{R}}
+\newcommand{\numsimbin}{N^\trt{sim}_\trt{bin}}
+\newcommand{\numsimagn}{N^\trt{sim}_\trt{AGN}}
+
+\newcommand{\numobsagn}{N^\trt{obs}_\trt{AGN}}
+
+\newcommand{\numsimagncrts}{N^\trt{sim,CRTS}_\trt{AGN}}
+\newcommand{\numobsagncrts}{N^\trt{obs,CRTS}_\trt{AGN}}
+
+\newcommand{\numsimagnlsst}{N^\trt{sim,LSST}_\trt{AGN}}
+\newcommand{\numobsagnlsst}{N^\trt{obs,LSST}_\trt{AGN}}
+
+\newcommand{\fcomplsst}{f_\trt{complete}^\trt{LSST}}
+
+\newcommand{\fracobsdop}{f_\trt{obs}^\trt{dop}}
+
+
+
+% = = = = = = = = = = = = = = = = = = =   TITLE & HEADER   = = = = = = = = = = = = = = = = = = = =
+
+\newtotcounter{citnum} % From the package documentation
+\def\oldbibitem{} \let\oldbibitem=\bibitem
+\def\bibitem{\stepcounter{citnum}\oldbibitem}
+
+
+\title[Short Title]{Really Really Long Title}
+\author[L.Z.~Kelley et al.]{
+    Luke Zoltan Kelley$^{1}$\thanks{E-mail:lzkelley@northwestern.edu}
+    \vspace{0.1in} \\
+    $^{1}$ \begin{minipage}[t]{\linewidth} Center for Interdisciplinary Exploration and Research in Astrophysics (CIERA); Northwestern University, Evanston, IL 60208 \end{minipage}
+}
+
+
+\begin{document}
+
+\pagerange{\pageref{firstpage}--\pageref{lastpage}} \pubyear{2018}
+
+\maketitle
+\label{firstpage}
+
+\begin{abstract}
+    Abstract
+\end{abstract}
+
+\begin{keywords}
+quasars: supermassive black holes, galaxies: kinematics and dynamics
+\end{keywords}
+
+
+
+% Sec 1
+\section{Introduction}
+    \label{sec:intro}
+
+
+% Sec 2
+\section{Methods}
+    \label{sec:meth}
+
+    % Sec 2.1
+    \subsection{MBH Binary Population and Evolution}
+        \label{sec:meth_mbhb}
+
+        \begin{align}
+            \label{eq:acc_rat}
+            \begin{split}
+            \mdotrat = q^{a_1} e^{-a_2/q} + \frac{a_3}{\left(a_4 q\right)^{a_5} + \left( a_4 q \right)^{-a_5}} \\
+            a_1 = -0.25,  \,\,  a_2 = 0.1,  \,\,  a_3 = 50,  \,\,  a_4 = 12,  \,\,  a_5 = 3.5.
+            \end{split}
+        \end{align}
+
+        % Fig 0 - Accretion ratio / accretion partition function
+        \begin{figure*}
+            \centering
+            \includegraphics[width=\textwidth]{{{figs/0_schematic}}}
+            \caption{Schematic representation of the binary.}
+            \label{fig:0_schematic}
+        \end{figure*}
+
+% Sec 3
+\section{Results}
+    \label{sec:res}
+
+
+% Sec 4
+\section{Discussion}
+    \label{sec:disc}
+
+        \renewcommand{\arraystretch}{2.0}
+        \setlength{\tabcolsep}{4pt}
+        \begin{table*}
+            \begin{center}
+
+            \begin{tabular}{ r | l l |}
+                                & \multicolumn{2}{c|}{Doppler}         \\
+            Number              & CRTS         & LSST                  \\ \hline
+            All Sky		        & $5\E{-1}$    & $3\E{+1}$             \\
+            \end{tabular}
+
+            \caption{\textbf{Expected observability of MBH binary, periodically variable AGN}.}
+            \label{tab:rates}
+            \end{center}
+        \end{table*}
+
+
+% Acknowledgments
+% ---------------
+\section*{Acknowledgments}
+
+
+% ---- Bibliography ----
+\let\oldUrl\url
+\renewcommand{\url}[1]{\href{#1}{Link}}
+
+\quad{}
+\bibliographystyle{mnras}
+% \bibliography{refs}
+\bibliography{references}
+
+
+\onecolumn
+\clearpage
+
+\appendix
+
+    \section{}
+    \label{sec:app}
+
+    \twocolumn
+
+    \label{lastpage}
+
+
+\end{document}

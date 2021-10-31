@@ -15,9 +15,11 @@ import os
 import shutil
 import warnings
 
-DIRS = [["./styles/", "/Users/lzkelley/Library/texmf/tex/latex/"],
-        ["./biblio/", "/Users/lzkelley/Library/texmf/bibtex/bst/"],
-        ["./templates/", "/Users/lzkelley/Library/TeXShop/Templates/"]]
+DIRS = [
+    ["./styles/", "/Users/lzkelley/Library/texmf/tex/latex/local/"],
+    ["./biblio/", "/Users/lzkelley/Library/texmf/bibtex/bst/"],
+    # ["./templates/", "/Users/lzkelley/Library/TeXShop/Templates/"]
+]
 
 VERBOSE = True
 TEST = False

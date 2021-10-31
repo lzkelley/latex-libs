@@ -1,12 +1,8 @@
-
+\usepackage{xifthen}
 
 \newcommand{\tr}[1]{\textrm{#1}}
 \newcommand{\trt}[1]{\textrm{\tiny{#1}}}
 \newcommand{\trf}[1]{\textrm{\footnotesize{#1}}}
-
-\newcommand{\frest}{f_\trt{r}}
-\newcommand{\fobs}{f}
-\newcommand{\fharm}{f_\trt{h}}
 
 \newcommand{\msol}{\tr{M}_{\odot}}
 \newcommand{\rsol}{\tr{R}_{\odot}}
@@ -30,11 +26,65 @@
 \newcommand{\E}[1]{\times\nobreak10^{#1}}
 \newcommand{\ls}{\lesssim}
 \newcommand{\gs}{\gtrsim}
-\newcommand{\logten}{\log_{10}}
-\newcommand{\lr}[1]{\left(#1\right)}
+\newcommand{\logten}[1]{\log_{10}\lr{#1}}
+
+% left-right parentheses
+% \newcommand{\lr}[1]{{\left(#1\right)}}
+\newcommand{\lr}[2][]{
+    \ifthenelse{\equal{#1}{}}{
+        % omitted
+        {\left(#2\right)}
+    }{
+        % given
+        {\left(#2\right)}^{#1}
+    }
+}
+
+% left-right square-bracket
+% \newcommand{\lrs}[1]{{\left[#1\right]}}
+\newcommand{\lrs}[2][]{
+    \ifthenelse{\equal{#1}{}}{
+        % omitted
+        {\left[#2\right]}
+    }{
+        % given
+        {\left[#2\right]}^{#1}
+    }
+}
+
+
+% left-right-tight (parenthesis
+\newcommand{\lrt}[1]{{\left(\!#1\!\right)}}
+
+% left-right-tight
+\newcommand{\lrst}[1]{{\left[\!#1\!\right]}}
+
 % optional first argument for exponent
 %    i.e. `\scale{A}{B} = (A/B)` or `\scale[2]{A}{B} = (A/B)^2`
-\newcommand{\scale}[3][]{\lr{ \frac{#2}{#3} }^{#1}}
+% \newcommand{\scale}[3][]{\lr{ \frac{#2}{#3} }^{#1}}
+% ----------
+% \newcommand{\scale}[3][]{
+%     \ifthenelse{\equal{#1}{}}{
+%         % omitted
+%         \lr{ \! \frac{#2}{#3} \!}
+%     }{
+%         % given
+%         {\lr{ \! \frac{#2}{#3} \!}\!}^{#1}
+%     }
+% }
+% -----------
+\newcommand{\scale}[3][]{
+    \ifthenelse{\equal{#1}{}}{
+        % omitted
+        \lr{ \frac{#2}{#3} }
+    }{
+        % given
+        {\lr[#1]{ \frac{#2}{#3} }}
+    }
+}
+
+\newcommand{\sinpar}[2][]{\sin^{#1}\!\lr{#2}}
+\newcommand{\cospar}[2][]{\cos^{#1}\!\lr{#2}}
 \newcommand{\blank}{\, ... \,}
 
 \newcommand{\lt}{<}
@@ -58,7 +108,7 @@
 \newcommand{\hscirc}{h_\trt{s,circ}}
 \newcommand{\hcs}{h_\trt{c,s}}
 
-\newcommand{\radius}{r}
+% \newcommand{\radius}{r}
 
 \newcommand{\mdot}{\dot{M}}
 \newcommand{\mdotedd}{\dot{M}_\trt{Edd}}
@@ -67,7 +117,7 @@
 \newcommand{\lacc}{L_\trt{acc}}    % accretion luminosity
 \newcommand{\radeff}{\varepsilon_\trt{rad}}
 
-\newcommand{\powerlaw}{PPL}
+% \newcommand{\powerlaw}{PPL}
 \newcommand{\scalenoise}{\lambda_\tr{noise}}
 
 % == Logistical Commands ==
@@ -130,7 +180,7 @@
 
 \newcommand{\pgw}{P_\trt{GW}}    % GW Period
 \newcommand{\pgwmax}{P_\trt{GW,max}}    % GW Period
-\newcommand{\tobs}{T_\trt{obs}}   % Observing Duration (Pulsar Time)
+\newcommand{\tobs}{T_{\!\trt{obs}}}   % Observing Duration (Pulsar Time)
 \newcommand{\dtobs}{\Delta t_\trt{obs}}   % Observing Cadence / Period (Pulsar Time)
 
 
@@ -150,22 +200,53 @@
 \newcommand{\numpy}{\texttt{NumPy}}
 \newcommand{\scipy}{\texttt{SciPy}}
 \newcommand{\ipython}{\texttt{ipython}}
+\newcommand{\jupyter}{\texttt{jupyter}}
 \newcommand{\arepo}{{\texttt{Arepo}}}
+\newcommand{\sympy}{{\texttt{SymPy}}}
+% \newcommand{\kalepy}{{\texttt{kalepy}}}
+
+% \DeclareRobustCommand\kalepy{\texttt{
+%     % \scalebox{1.1}{%
+%     {\fontsize{10}{8} \selectfont
+%     k\kern-0em%
+%     % \raisebox{0ex}{\textcolor{blue}{$a$}}\kern-.14em%
+%     \raisebox{0ex}{$a$}\kern-.14em%
+%     \textcolor{black}{$l$}\kern-0.05em%
+%     e\kern+0.04em%
+%     }%
+%     p\kern-.05em%
+%     y%
+% }}
+
+\DeclareRobustCommand\kalepy{\texttt{
+    % \scalebox{1.1}{%
+    % {\fontsize{10}{8} \selectfont
+    k\kern+0.05em%
+    % \raisebox{0ex}{\textcolor{blue}{$a$}}\kern-.14em%
+    \raisebox{0ex}{$a$}\kern-.12em%
+    \textcolor{black}{$l$}\kern-0.0em%
+    e\kern+0.04em%
+    % }%
+    p\kern-.05em%
+    y%
+}}
+
 
 
 \newcommand{\pc}{\mathrm{pc}}
-
-\newcommand{\SNR}{\tr{S}/\tr{N}}   % Signal-to-Noise Ratio SNR
+\newcommand{\yr}{\mathrm{yr}}        % yr in math-mode
 
 \newcommand*\ave[1]{\overline{#1}}
 \newcommand\erfc[1]{\mathrm{erfc}\left(#1\right)}
 \newcommand\erfcinv[1]{\mathrm{erfc}^{-1}\left(#1\right)}
-\newcommand\snra{\mbox{$\mathcal{R}_A$}}
-\newcommand\snrb{\mbox{$\mathcal{R}_B$}}
-\newcommand\snrta{\mbox{$\mathcal{R}_A^T$}}
-\newcommand\snrtb{\mbox{$\mathcal{R}_B^T$}}
-\newcommand\pulsarsum{\sum_k \sum_{ij}}
-\newcommand\Gij{\Gamma_{ij}}
+
+% \newcommand{\SNR}{\tr{S}/\tr{N}}   % Signal-to-Noise Ratio SNR
+% \newcommand\snra{\mbox{$\mathcal{R}_A$}}
+% \newcommand\snrb{\mbox{$\mathcal{R}_B$}}
+% \newcommand\snrta{\mbox{$\mathcal{R}_A^T$}}
+% \newcommand\snrtb{\mbox{$\mathcal{R}_B^T$}}
+% \newcommand\pulsarsum{\sum_k \sum_{ij}}
+% \newcommand\Gij{\Gamma_{ij}}
 
 \newcommand{\rdf}{R_\trt{df}}
 \newcommand{\tdf}{\bigt_\trt{df}}
@@ -220,7 +301,6 @@
 \newcommand{\fluxflc}{F^\trt{full}_\trt{lc}}
 \newcommand{\fluxsslc}{F^\trt{eq}_\trt{lc}}
 \newcommand{\msp}{\,\,\,\,}
-\newcommand{\yr}{\,\mathrm{yr}}        % yr in math-mode
 \newcommand{\wnrms}{\sigma_\trt{WN}}   % White-Noise Sigma RMS
 \newcommand{\nrms}{\sigma_\trt{N}}
 \newcommand{\micros}{\mu \textrm{s}}
