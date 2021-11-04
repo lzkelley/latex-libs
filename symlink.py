@@ -15,6 +15,8 @@ import os
 import shutil
 import warnings
 
+from pathlib import Path
+
 DIRS = [
     ["./styles/", "/Users/lzkelley/Library/texmf/tex/latex/local/"],
     ["./biblio/", "/Users/lzkelley/Library/texmf/bibtex/bst/"],
@@ -24,14 +26,25 @@ DIRS = [
 VERBOSE = True
 TEST = False
 COPY_INSTEAD_OF_SYMLINK = False
+CREATE_DIRS = True
+
 
 def main():
     # Iterate over directories
     for (din, dout) in DIRS:
         # Get input and output (symlink) file names
         fin, fout = getFiles(din, dout)
+    
         # Create links
         for infile, outfile in zip(fin, fout):
+            path = Path(outfile).expanduser()
+            if CREATE_DIRS:
+                print(f"Creating directory: '{path.parent}'")
+                path.parent.mkdir(parents=True, exist_ok=True)
+
+            if not path.parent.is_dir():
+                raise RuntimeError(f"path does not exist!  '{path.parent}' !")
+                
             create_symlink(infile, outfile)
 
     return
@@ -44,7 +57,8 @@ def main():
 
 
 def getFiles(din, dout):
-    if VERBOSE: print("Dir: '{}'".format(din))
+    if VERBOSE:
+        print("Dir: '{}'".format(din))
     fin = []
     fout = []
     # Iterate over files in directory
